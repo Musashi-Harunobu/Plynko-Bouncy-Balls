@@ -1155,8 +1155,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1420491306}
   m_Father: {fileID: 0}
@@ -1553,8 +1553,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4293789421
+  m_fontColor: {r: 0.9294118, g: 0.023529414, b: 0.9333334, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2251,9 +2251,8 @@ PolygonCollider2D:
       - {x: 0.9191122, y: 11.050972}
       - {x: 0.86504674, y: 11.018533}
       - {x: 0.8326075, y: 10.921215}
-      - {x: 0.8326075, y: 10.823897}
+      - {x: -0.8597243, y: 10.837656}
       - {x: 0.86504674, y: 10.769832}
-      - {x: 0.9407383, y: 10.704953}
       - {x: 0.9948038, y: 10.683328}
       - {x: 4.2819815, y: 10.683328}
       - {x: 4.2927947, y: 10.672514}
