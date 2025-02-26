@@ -1,28 +1,33 @@
 using System;
 using UnityEngine;
 using TMPro;
+using Random = UnityEngine.Random;
 
 public class PointController : MonoBehaviour
 {
-    [SerializeField] private int strength = 3; // Прочность точки
     [SerializeField] private TextMeshPro strengthText;
     [SerializeField] private string tagName;
 
+    private int _strength;
+
+    private void Awake()
+    {
+        _strength = Random.Range(1, 8);
+    }
+
     private void Update()
     {
-        strengthText.text = strength.ToString();
+        strengthText.text = _strength.ToString();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag(tagName))
         {
-            // Уменьшаем прочность точки при попадании мяча
-            strength--;
+            _strength--;
 
-            if (strength <= 0)
+            if (_strength <= 0)
             {
-                // Удаляем точку, когда ее прочность достигает нуля
                 Destroy(gameObject);
             }
         }
