@@ -12,15 +12,22 @@ public class CannonController : MonoBehaviour
         RotateCannon();
     }
 
-    void RotateCannon()
+    private void RotateCannon()
     {
-        // Получаем свайп на экране
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
             
-            // Поворачиваем пушку в зависимости от движения пальца
             float rotationAmount = touch.deltaPosition.x * rotationSpeed * Time.deltaTime;
+            transform.Rotate(0, 0, -rotationAmount);
+        }
+    }
+
+    private void RotateCannonWithMouse()
+    {
+        if (Input.GetMouseButton(0))
+        {
+            float rotationAmount = Input.GetAxis("Mouse X") * rotationSpeed * Time.deltaTime;
             transform.Rotate(0, 0, -rotationAmount);
         }
     }
