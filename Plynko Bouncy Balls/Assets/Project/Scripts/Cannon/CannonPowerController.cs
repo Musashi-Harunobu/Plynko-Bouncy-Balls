@@ -1,10 +1,13 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+
 public class CannonPowerController : MonoBehaviour
 {
     [SerializeField] private Slider powerSlider;
     [SerializeField] private GameObject cannonBall;
+
+    private int _moneyPerGame;
 
     private float _chargeStartTime = 0f;
     private float _maxChargeTime = 1f;
