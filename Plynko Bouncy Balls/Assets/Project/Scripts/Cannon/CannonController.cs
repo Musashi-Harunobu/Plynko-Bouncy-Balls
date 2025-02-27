@@ -3,9 +3,6 @@ using UnityEngine;
 public class CannonController : MonoBehaviour
 {
     [SerializeField] private float rotationSpeed = 5f; // Скорость поворота пушки
-
-    private float _minAngle = -90f;
-    private float _maxAngle = 90f;
     
     private void Update()
     {
