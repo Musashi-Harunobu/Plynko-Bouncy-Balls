@@ -21,16 +21,19 @@ public class SceneContorller : MonoBehaviour
         int sceneID = CurrentSceneID();
 
         SceneManager.LoadScene(++sceneID);
+        Time.timeScale = 1f;
     }
 
     public static void LoadSceneByIndex(int sceneID)
     {
         SceneManager.LoadScene(sceneID);
+        Time.timeScale = 1f;
     }
 
     public static void LoadSceneByName(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
+        Time.timeScale = 1f;
     }
 
     public static void CloseGame()
