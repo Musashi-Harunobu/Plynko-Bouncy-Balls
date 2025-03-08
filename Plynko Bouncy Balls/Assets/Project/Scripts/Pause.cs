@@ -8,8 +8,6 @@ public class Pause : MonoBehaviour
     [SerializeField] private UnityEvent onPauseEnable;
     [SerializeField] private UnityEvent onPauseDisable;
     
-    
-    
     public void OnPause()
     {
         Time.timeScale = 0;

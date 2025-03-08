@@ -6,13 +6,21 @@ public class CannonPowerController : MonoBehaviour
 {
     [SerializeField] private Slider powerSlider;
     [SerializeField] private GameObject cannonBall;
-
-    private int _moneyPerGame;
+    
+    private ScaleManager _scaleManager;
+    private PointManager _pointManager;
 
     private float _chargeStartTime = 0f;
     private float _maxChargeTime = 1f;
     private float _power;
     private bool _isCharging = false;
+
+    private void Awake()
+    {
+        _scaleManager = GetComponent<ScaleManager>();
+        _pointManager = FindObjectOfType<PointManager>();
+    }
+
     private void Start()
     {
         powerSlider.minValue = 0f;
@@ -51,6 +59,8 @@ public class CannonPowerController : MonoBehaviour
         GameObject ball = Instantiate(cannonBall, transform.position, Quaternion.identity);
         Rigidbody2D rb = ball.GetComponent<Rigidbody2D>();
         rb.AddForce(-transform.up * _power * 500f);
+        _scaleManager.ChangeScale();
+        _pointManager.MovePointsUp();
         Debug.Log(_power);
     }
     

@@ -4,7 +4,7 @@ using TMPro;
 using Random = UnityEngine.Random;
 
 public class PointController : MonoBehaviour
-{
+{ 
     [SerializeField] private TextMeshPro strengthText;
     [SerializeField] private string tagName;
 
@@ -19,13 +19,14 @@ public class PointController : MonoBehaviour
     {
         strengthText.text = _strength.ToString();
     }
+    
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag(tagName))
         {
             _strength--;
-
+    
             if (_strength <= 0)
             {
                 Destroy(gameObject);
