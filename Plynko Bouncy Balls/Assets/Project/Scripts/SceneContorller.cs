@@ -14,6 +14,7 @@ public class SceneContorller : MonoBehaviour
     {
         SceneManager.LoadScene(CurrentSceneID());
         Time.timeScale = 1f;
+        GameManager.Instance.StartNewRound();
     }
 
     public static void LoadNextScene()
@@ -22,18 +23,21 @@ public class SceneContorller : MonoBehaviour
 
         SceneManager.LoadScene(++sceneID);
         Time.timeScale = 1f;
+        GameManager.Instance.StartNewRound();
     }
 
     public static void LoadSceneByIndex(int sceneID)
     {
         SceneManager.LoadScene(sceneID);
         Time.timeScale = 1f;
+        GameManager.Instance.StartNewRound();
     }
 
     public static void LoadSceneByName(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
         Time.timeScale = 1f;
+        GameManager.Instance.StartNewRound();
     }
 
     public static void CloseGame()
