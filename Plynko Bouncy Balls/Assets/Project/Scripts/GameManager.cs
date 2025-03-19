@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
     public int GameBallsOnStart = 2;
     public int CurrentGameScore;
 
+    public int LoadedScene = 1;
+
     // Перманентные улучшения (из магазина)
     public int AddBallLevel { get; private set; }
     public int JoinBallLevel { get; private set; }
