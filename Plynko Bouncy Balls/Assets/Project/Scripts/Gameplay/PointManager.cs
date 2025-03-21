@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class PointManager : MonoBehaviour
 {
-    private static PointManager _instance;
-    public static PointManager Instance => _instance;
     
     [SerializeField] private GameObject[] pointPrefab;
     [SerializeField] private int rows = 1;
@@ -20,17 +18,6 @@ public class PointManager : MonoBehaviour
     private void Awake()
     {
         startPoint = transform.position;
-        
-        if (_instance == null)
-        {
-            _instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-
         
         //InvokeRepeating("MovePointsUp", spawnInterval, spawnInterval);
     }
@@ -93,7 +80,7 @@ public class PointManager : MonoBehaviour
     {
         foreach (var point in _points)
         {
-            if (point != null && point.transform.position.y > 3.5f)
+            if (point != null && point.transform.position.y >= 3.5f)
             {
                 Debug.Log("Игра окончена!");
                 GameOver();

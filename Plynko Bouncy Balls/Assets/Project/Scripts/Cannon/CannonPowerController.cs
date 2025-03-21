@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
@@ -15,9 +16,11 @@ public class CannonPowerController : MonoBehaviour
     private bool _isShooting = false; // 🔹 Блокируем двойные выстрелы
 
     private Queue<GameManager.BallType> ballQueue = new Queue<GameManager.BallType>();
+    
 
     private void Start()
     {
+        GameManager.Instance.StartNewRound();
         LoadBallsFromGameManager();
     }
 

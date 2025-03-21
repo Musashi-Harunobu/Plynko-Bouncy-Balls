@@ -6,14 +6,7 @@ using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
-    [SerializeField] private Button playButton;
-
-    private void FixedUpdate()
-    {
-        playButton.onClick.AddListener(LoadedSceneController);
-    }
-
-    private void LoadedSceneController()
+    public void LoadedSceneController()
     {
         SceneContorller.LoadSceneByIndex(GameManager.Instance.LoadedScene);
     }

@@ -493,7 +493,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 50
+  m_text: 90
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 259c5d5d22a88bd44ac5026d21fd62c1, type: 2}
   m_sharedMaterial: {fileID: -1367149723713280171, guid: 259c5d5d22a88bd44ac5026d21fd62c1, type: 2}
@@ -734,7 +734,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -0.02}
-  m_SizeDelta: {x: 2, y: 2}
+  m_SizeDelta: {x: 5, y: 2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &160497638
 MonoBehaviour:
@@ -756,7 +756,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 5
+  m_text: 15
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 259c5d5d22a88bd44ac5026d21fd62c1, type: 2}
   m_sharedMaterial: {fileID: -1367149723713280171, guid: 259c5d5d22a88bd44ac5026d21fd62c1, type: 2}
@@ -1191,7 +1191,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 20087d45a53f06648bb96ac300c3c47b, type: 3}
-  m_Color: {r: 0, g: 0.97647065, b: 0.427451, a: 1}
+  m_Color: {r: 0.89019614, g: 0.7843138, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1718,7 +1718,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 8
+  m_text: 20
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 259c5d5d22a88bd44ac5026d21fd62c1, type: 2}
   m_sharedMaterial: {fileID: -1367149723713280171, guid: 259c5d5d22a88bd44ac5026d21fd62c1, type: 2}
@@ -2263,7 +2263,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc27f72efc83afd4794c10f3fc618325, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  holeValue: 8
+  holeValue: 20
 --- !u!60 &344098228
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -2601,7 +2601,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc27f72efc83afd4794c10f3fc618325, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  holeValue: 15
+  holeValue: 45
 --- !u!60 &456359638
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -3142,7 +3142,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 510090238}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 241494815}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &510090238
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3683,7 +3695,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc27f72efc83afd4794c10f3fc618325, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  holeValue: 5
+  holeValue: 15
 --- !u!60 &734282258
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -4383,7 +4395,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc27f72efc83afd4794c10f3fc618325, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  holeValue: 15
+  holeValue: 45
 --- !u!60 &965186477
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -4857,7 +4869,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 15
+  m_text: 45
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 259c5d5d22a88bd44ac5026d21fd62c1, type: 2}
   m_sharedMaterial: {fileID: -1367149723713280171, guid: 259c5d5d22a88bd44ac5026d21fd62c1, type: 2}
@@ -5598,7 +5610,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 50
+  m_text: 90
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 259c5d5d22a88bd44ac5026d21fd62c1, type: 2}
   m_sharedMaterial: {fileID: -1367149723713280171, guid: 259c5d5d22a88bd44ac5026d21fd62c1, type: 2}
@@ -6232,7 +6244,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 8
+  m_text: 20
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 259c5d5d22a88bd44ac5026d21fd62c1, type: 2}
   m_sharedMaterial: {fileID: -1367149723713280171, guid: 259c5d5d22a88bd44ac5026d21fd62c1, type: 2}
@@ -6630,7 +6642,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b4d7db9db77d62e40a3896431591dfbd, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3691052ed629c3049915a2238d74af30, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6760,7 +6772,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc27f72efc83afd4794c10f3fc618325, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  holeValue: 50
+  holeValue: 90
 --- !u!60 &1716099474
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -6925,7 +6937,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc27f72efc83afd4794c10f3fc618325, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  holeValue: 50
+  holeValue: 90
 --- !u!60 &1731892747
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -7451,7 +7463,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc27f72efc83afd4794c10f3fc618325, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  holeValue: 8
+  holeValue: 20
 --- !u!60 &1961802001
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -7625,7 +7637,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: c5a8f193ad1be65449a6f52f69519ba8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: debba1bd6fc34f94b9640b7c7709ab58, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -7802,7 +7814,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 15
+  m_text: 45
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 259c5d5d22a88bd44ac5026d21fd62c1, type: 2}
   m_sharedMaterial: {fileID: -1367149723713280171, guid: 259c5d5d22a88bd44ac5026d21fd62c1, type: 2}
