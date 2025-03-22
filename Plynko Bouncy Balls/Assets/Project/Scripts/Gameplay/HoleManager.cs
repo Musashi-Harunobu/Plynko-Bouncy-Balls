@@ -1,11 +1,10 @@
-using System;
-using System.Collections;
 using UnityEngine;
 
 public class HoleManager : MonoBehaviour
 {
-    [SerializeField] private int holeValue;
-    
+    [SerializeField] private bool isBigHole; // Укажите в инспекторе, большая (true) или обычная (false).
+    [SerializeField] private int holeValue = 10; // Сколько очков/звёзд даёт лунка
+
     private ScaleManager _scaleManager;
 
     private void Awake()
@@ -15,12 +14,38 @@ public class HoleManager : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.GetComponent<Ball>())
+        // Проверяем, что в лунку попал шар (Ball)
+        Ball ballComponent = other.gameObject.GetComponent<Ball>();
+        if (ballComponent != null)
         {
-            Destroy(other.gameObject);
-            GameManager.Instance.CurrentGameScore += holeValue;
-            Debug.Log(GameManager.Instance.CurrentGameScore);
-            _scaleManager.ChangeScale();
+            // Если лунка большая (красная)
+            if (isBigHole)
+            {
+                // Возвращаем шар в список playerBalls
+                var ballType = ballComponent.ballType;
+                Destroy(other.gameObject); // удаляем физический объект
+
+                // Но добавляем тот же самый тип шара обратно в очередь GameManager
+                GameManager.Instance.roundBalls.Add(ballType);
+
+                // При желании здесь тоже можно давать очки/звёзды, если нужно
+                // GameManager.Instance.CurrentGameScore += holeValue;
+                // GameManager.Instance.Stars += holeValue;
+
+                _scaleManager.ChangeScale();
+            }
+            else
+            {
+                // Обычная лунка: шар уничтожается, зарабатываем очки и звёзды
+                Destroy(other.gameObject);
+
+                GameManager.Instance.CurrentGameScore += holeValue;
+                GameManager.Instance.Stars += holeValue;
+
+                Debug.Log($"Score={GameManager.Instance.CurrentGameScore} Stars={GameManager.Instance.Stars}");
+
+                _scaleManager.ChangeScale();
+            }
         }
     }
 }

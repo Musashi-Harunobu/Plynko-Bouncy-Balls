@@ -134,8 +134,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fb5c70ec96d85a4b9935ba650618cb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pointColor: 1
   strengthText: {fileID: 3810283473438070384}
-  tagName: PurpleBall
 --- !u!1 &2777912414847414371
 GameObject:
   m_ObjectHideFlags: 0

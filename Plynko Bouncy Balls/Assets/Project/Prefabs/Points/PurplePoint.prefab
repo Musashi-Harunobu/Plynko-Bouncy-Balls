@@ -305,5 +305,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fb5c70ec96d85a4b9935ba650618cb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pointColor: 2
   strengthText: {fileID: 8171084579566152383}
-  tagName: PurpleBall

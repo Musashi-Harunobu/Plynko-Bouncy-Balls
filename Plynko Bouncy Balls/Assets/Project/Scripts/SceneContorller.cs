@@ -14,7 +14,7 @@ public class SceneContorller : MonoBehaviour
     {
         SceneManager.LoadScene(CurrentSceneID());
         Time.timeScale = 1f;
-        GameManager.Instance.StartNewRound();
+        GameManager.Instance.GameOver();
     }
 
     public static void LoadNextScene()
@@ -30,7 +30,7 @@ public class SceneContorller : MonoBehaviour
     {
         SceneManager.LoadScene(sceneID);
         Time.timeScale = 1f;
-        //GameManager.Instance.StartNewRound();
+        GameManager.Instance.GameOver();
     }
 
     public static void LoadSceneByName(string sceneName)

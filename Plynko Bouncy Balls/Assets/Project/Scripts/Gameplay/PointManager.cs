@@ -91,6 +91,8 @@ public class PointManager : MonoBehaviour
     private void GameOver()
     {
         CancelInvoke("MovePointsUp");
+        
+        GameManager.Instance.GameOver();
 
         Debug.LogError("Точки достигли верха поля! Игра окончена.");
     }
