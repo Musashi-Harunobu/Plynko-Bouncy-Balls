@@ -39,8 +39,9 @@ public class HoleManager : MonoBehaviour
                 // Обычная лунка: шар уничтожается, зарабатываем очки и звёзды
                 Destroy(other.gameObject);
 
+                
                 GameManager.Instance.CurrentGameScore += holeValue;
-                GameManager.Instance.Stars += holeValue;
+                GameManager.Instance.AddStars(holeValue);
 
                 Debug.Log($"Score={GameManager.Instance.CurrentGameScore} Stars={GameManager.Instance.Stars}");
 

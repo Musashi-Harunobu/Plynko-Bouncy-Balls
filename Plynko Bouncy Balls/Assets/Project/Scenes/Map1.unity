@@ -6087,6 +6087,54 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1148592903}
   m_CullTransparentMesh: 1
+--- !u!1 &1157979004
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1157979006}
+  - component: {fileID: 1157979005}
+  m_Layer: 0
+  m_Name: StarSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1157979005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1157979004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c2133d8999976140bed516f5da2921b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  starPrefab: {fileID: 570892394486168124, guid: 8bbb62644baefca40bb6772de33a367a, type: 3}
+  maxStarsPerSession: 20
+  spawnAreaMin: {x: -1.5, y: -3}
+  spawnAreaMax: {x: 1.5, y: 3}
+--- !u!4 &1157979006
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1157979004}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1162948476
 GameObject:
   m_ObjectHideFlags: 0
@@ -6323,7 +6371,7 @@ MonoBehaviour:
   columns: 0
   spawnInterval: 3
   startPoint: {x: 0, y: 0}
-  pointSpacing: 0.5
+  pointSpacing: 0.7
 --- !u!4 &1198287996
 Transform:
   m_ObjectHideFlags: 0
@@ -8035,6 +8083,54 @@ PolygonCollider2D:
       - {x: 0.3275, y: -0.1475}
       - {x: 0.3275, y: 0.21249999}
   m_UseDelaunayMesh: 0
+--- !u!1 &1613544407
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1613544409}
+  - component: {fileID: 1613544408}
+  m_Layer: 0
+  m_Name: ScreenInformation
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1613544408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1613544407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7fb2ebbec5d252469a3b33bdc9426d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stars: {fileID: 0}
+  currentGameScoreText: {fileID: 1397932152}
+  roundStarCountText: {fileID: 1108263307}
+  resultGameScoreText: {fileID: 432998158}
+--- !u!4 &1613544409
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1613544407}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.2318345, y: -0.09067471, z: 3338.3408}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1631119884
 GameObject:
   m_ObjectHideFlags: 0
@@ -10425,3 +10521,5 @@ SceneRoots:
   - {fileID: 271713721}
   - {fileID: 1198287996}
   - {fileID: 2057637750}
+  - {fileID: 1613544409}
+  - {fileID: 1157979006}
