@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class StarSpawner : MonoBehaviour
 {
-    private static int spawnedStarsCount;
+    public static int CollectedStars = 0;
     
     [Header("Параметры спавна звёзд")]
     [SerializeField] private GameObject starPrefab;
@@ -11,15 +11,17 @@ public class StarSpawner : MonoBehaviour
     [SerializeField] private Vector2 spawnAreaMin = new Vector2(-5f, -3f);
     [SerializeField] private Vector2 spawnAreaMax = new Vector2(5f, 3f);
     
+    private int _spawnedStarsCount;
+    
     public void ResetSpawner()
     {
-        spawnedStarsCount = 0;
+        _spawnedStarsCount = 0;
     }
 
     public void SpawnRandomStars(int starsToSpawn)
     {
         // Сколько ещё можем заспавнить, не превышая лимит
-        int available = maxStarsPerSession - spawnedStarsCount;
+        int available = maxStarsPerSession - _spawnedStarsCount;
         if (available <= 0)
         {
             Debug.Log("StarSpawner: достигнут лимит спавна звёзд за сессию.");
@@ -40,9 +42,9 @@ public class StarSpawner : MonoBehaviour
 
             Instantiate(starPrefab, spawnPos, Quaternion.identity);
 
-            spawnedStarsCount++;
+            _spawnedStarsCount++;
         }
         
-        Debug.Log($"StarSpawner: заспавнили {starsToSpawn} звёзд, всего {spawnedStarsCount}/{maxStarsPerSession}.");
+        Debug.Log($"StarSpawner: заспавнили {starsToSpawn} звёзд, всего {_spawnedStarsCount}/{maxStarsPerSession}.");
     }
 }

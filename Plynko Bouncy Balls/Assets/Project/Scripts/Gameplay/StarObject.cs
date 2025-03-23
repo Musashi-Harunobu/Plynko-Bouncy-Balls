@@ -10,6 +10,7 @@ public class StarObject : MonoBehaviour
         if (ball != null)
         {
             GameManager.Instance.AddStars(starValue);
+            StarSpawner.CollectedStars++;
 
             Destroy(gameObject);
         }

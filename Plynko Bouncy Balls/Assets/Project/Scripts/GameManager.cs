@@ -34,6 +34,9 @@ public class GameManager : MonoBehaviour
     public List<BallType> permanentBalls = new List<BallType>();
 
     public List<BallType> roundBalls = new List<BallType>();
+    
+    private const int TOP_SIZE = 5;
+    public HighScoreEntry[] topResults = new HighScoreEntry[TOP_SIZE];
 
     private PointManager _pointManager;
     
@@ -64,6 +67,7 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        LoadTopResults();
     }
 
     private void Start()
@@ -88,6 +92,8 @@ public class GameManager : MonoBehaviour
         startSessionStars = Stars;
 
         sessionStars = 0;
+
+        StarSpawner.CollectedStars = 0;
         
         permanentBalls.Clear();
         for (int i = 0; i < baseGameBallsOnStart; i++)
@@ -154,11 +160,16 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         Debug.Log("GAME OVER: сбрасываем временные вещи, но сохраняем уровни апгрейдов.");
+        
+        AddNewResult(CurrentGameScore, sessionStars);
 
         // Сброс временных составляющих (permanentBalls, Score).
         permanentBalls.Clear();
         roundBalls.Clear();
         CurrentGameScore = 0;
+        sessionStars = 0;
+        startSessionStars = Stars;
+        StarSpawner.CollectedStars = 0;
 
         for (int i = 0; i < baseGameBallsOnStart; i++)
            permanentBalls.Add(BallType.Red);
@@ -176,6 +187,24 @@ public class GameManager : MonoBehaviour
         sessionStars = Stars - startSessionStars;
 
         Debug.Log($"Добавлено {value} звёзд. Всего теперь {Stars}, за сессию {sessionStars}.");
+    }
+    
+    public void RemoveBallFromRoundBalls(BallType type)
+    {
+        int index = roundBalls.IndexOf(type);
+        if (index >= 0)
+        {
+            roundBalls.RemoveAt(index);
+            Debug.Log($"Мяч цвета {type} удалён из roundBalls. Осталось {roundBalls.Count}.");
+        }
+        else
+        {
+            Debug.LogWarning($"Попытка удалить мяч цвета {type}, но его нет в roundBalls!");
+        }
+        
+
+        // Теперь проверяем, не пора ли завершать раунд
+        CheckEndRound();
     }
 
     // -----------------------------
@@ -195,6 +224,7 @@ public class GameManager : MonoBehaviour
 
             sessionStars -= 5;
             // Stars -= ballsToBuy * 10;
+            //FindObjectOfType<BallsList2D>().RefreshUI();
 
             Debug.Log($"Куплено {ballsToBuy} красных мячей. permanentBalls={permanentBalls.Count}, roundBalls={roundBalls.Count}");
         }
@@ -209,7 +239,8 @@ public class GameManager : MonoBehaviour
     {
         permanentBalls.Add(BallType.Green);
         roundBalls.Add(BallType.Green);
-
+        //FindObjectOfType<BallsList2D>().RefreshUI();
+        
         Debug.Log($"Куплен универсальный (зелёный) мяч. permanentBalls={permanentBalls.Count}, roundBalls={roundBalls.Count}");
     }
 
@@ -232,78 +263,76 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Объединение мячей. Важно делать это в permanentBalls, чтобы результат 
-    /// сохранился на будущие раунды. При желании — синхронизировать roundBalls.
-    /// </summary>
     public void JoinBalls()
     {
         if (sessionStars >= 7)
         {
             if (JoinBallLevel >= 1)
             {
-                int ballsToCombine = (int)Mathf.Pow(2, JoinBallLevel); 
-                // допустим, если JoinBallLevel=2 => нужно 4 одинаковых шара
+                // Сколько мячей нужно объединить (2^level)
+                int ballsToCombine = (int)Mathf.Pow(2, JoinBallLevel);
 
-                if (permanentBalls.Count >= ballsToCombine)
+                Dictionary<BallType, int> colorCounts = new Dictionary<BallType, int>();
+                foreach (var ball in permanentBalls)
                 {
-                    // Для упрощения возьмём первые 'ballsToCombine' шара
-                    BallType firstBallType = permanentBalls[0];
-                    bool allSame = true;
-                    for (int i = 1; i < ballsToCombine; i++)
-                    {
-                        if (permanentBalls[i] != firstBallType)
-                        {
-                            allSame = false;
-                            break;
-                        }
-                    }
-                    if (!allSame)
-                    {
-                        Debug.LogWarning("Мячи разных типов, нельзя объединить.");
-                        return;
-                    }
-
-                    // Удаляем их
-                    permanentBalls.RemoveRange(0, ballsToCombine);
-
-                    // Создаём новый шар
-                    int newLevel = (int)firstBallType + JoinBallLevel;
-                    if (newLevel > (int)BallType.Green)
-                    {
-                        Debug.LogWarning("Превышен максимальный уровень шаров!");
-                        return;
-                    }
-                    BallType newType = (BallType)newLevel;
-                    permanentBalls.Add(newType);
-
-                    // Обновляем roundBalls, чтобы изменения отразились прямо сейчас
-                    roundBalls.Clear();
-                    roundBalls.AddRange(permanentBalls);
-
-                    Debug.Log($"Объединены {ballsToCombine} шаров типа {firstBallType} => новый {newType}.");
+                    if (!colorCounts.ContainsKey(ball))
+                        colorCounts[ball] = 0;
+                    colorCounts[ball]++;
                 }
-                else
+
+                BallType? foundColor = null;
+                foreach (var pair in colorCounts)
                 {
-                    Debug.LogWarning("Недостаточно мячей для объединения!");
+                    if (pair.Value >= ballsToCombine)
+                    {
+                        foundColor = pair.Key; 
+                        break;
+                    }
                 }
+
+                if (foundColor == null)
+                {
+                    Debug.LogWarning("Нет достаточно одинаковых шаров для объединения!");
+                    return;
+                }
+
+                BallType colorToCombine = foundColor.Value;
+
+                int removed = 0;
+                for (int i = 0; i < permanentBalls.Count && removed < ballsToCombine; i++)
+                {
+                    if (permanentBalls[i] == colorToCombine)
+                    {
+                        permanentBalls.RemoveAt(i);
+                        i--;
+                        removed++;
+                    }
+                }
+
+                int newBallLevel = (int)colorToCombine + JoinBallLevel;
+                if (newBallLevel > (int)BallType.Green)
+                {
+                    Debug.LogWarning("Превышен максимальный уровень шаров!");
+                    return;
+                }
+
+                BallType newType = (BallType)newBallLevel;
+                permanentBalls.Add(newType);
+
+                roundBalls.Clear();
+                roundBalls.AddRange(permanentBalls);
+
+                Debug.Log($"Объединены {ballsToCombine} шаров типа {colorToCombine} => новый {newType}.");
 
                 sessionStars -= 7;
             }
         }
-        
     }
+
 
     // -----------------------------
     // ВЫСТРЕЛЫ / ИСПОЛЬЗОВАНИЕ МЯЧЕЙ В РАУНДЕ
     // -----------------------------
-
-    /// <summary>
-    /// Когда игрок делает выстрел и «тратит» мяч, удаляем его ИЗ roundBalls, 
-    /// но не из permanentBalls (если логика «мяч потрачен окончательно»).
-    /// Если по механике мяч вернулся через красную лунку, можно заново добавить его 
-    /// в roundBalls. 
-    /// </summary>
     public void SpendBall(int index)
     {
         if (index >= 0 && index < roundBalls.Count)
@@ -395,5 +424,60 @@ public class GameManager : MonoBehaviour
 
         Debug.Log($"Игровые данные загружены: Stars={Stars}, LoadedScene={LoadedScene}, BaseBallsOnStart={baseGameBallsOnStart}, " +
                   $"AddBallLevel={AddBallLevel}, JoinBallLevel={JoinBallLevel}, MultiBallLevel={MultiBallLevel}");
+    }
+    
+    private void LoadTopResults()
+    {
+        for (int i = 0; i < TOP_SIZE; i++)
+        {
+            // Считаем Score и Reward из PlayerPrefs
+            int score = PlayerPrefs.GetInt($"HS_Score_{i}", 0);
+            int reward = PlayerPrefs.GetInt($"HS_Reward_{i}", 0);
+
+            topResults[i] = new HighScoreEntry(score, reward);
+        }
+    }
+
+    private void SaveTopResults()
+    {
+        for (int i = 0; i < TOP_SIZE; i++)
+        {
+            PlayerPrefs.SetInt($"HS_Score_{i}", topResults[i].score);
+            PlayerPrefs.SetInt($"HS_Reward_{i}", topResults[i].reward);
+        }
+        PlayerPrefs.Save();
+    }
+    
+    public void AddNewResult(int newScore, int newReward)
+    {
+        // 1) Ищем позицию, куда вставить результат
+        // (ищем, где score меньше, чем newScore)
+        int insertPos = -1;
+        for (int i = 0; i < TOP_SIZE; i++)
+        {
+            if (newScore > topResults[i].score)
+            {
+                insertPos = i;
+                break;
+            }
+        }
+
+        // Если insertPos так и остался -1, значит newScore не лучше ни одной позиции — не вставляем
+        if (insertPos == -1)
+        {
+            return; 
+        }
+
+        // 2) Сдвигаем все результаты «вниз», чтобы освободить место
+        for (int i = TOP_SIZE - 1; i > insertPos; i--)
+        {
+            topResults[i] = topResults[i - 1];
+        }
+
+        // 3) Ставим новый результат
+        topResults[insertPos] = new HighScoreEntry(newScore, newReward);
+
+        // 4) Сохраняем обновлённую таблицу
+        SaveTopResults();
     }
 }

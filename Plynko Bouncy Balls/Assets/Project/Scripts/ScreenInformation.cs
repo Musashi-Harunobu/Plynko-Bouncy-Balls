@@ -9,9 +9,11 @@ public class ScreenInformation : MonoBehaviour
     [SerializeField] private TextMeshProUGUI stars;
     
     [SerializeField] private TextMeshProUGUI currentGameScoreText;
+    [SerializeField] private TextMeshProUGUI pausedGameScoreText;
     [SerializeField] private TextMeshProUGUI roundStarCountText;
     
     [SerializeField] private TextMeshProUGUI resultGameScoreText;
+    [SerializeField] private TextMeshProUGUI collectedStarsText;
 
     private void FixedUpdate()
     {
@@ -28,6 +30,14 @@ public class ScreenInformation : MonoBehaviour
         if (roundStarCountText != null)
         {
             roundStarCountText.text = $"{GameManager.Instance.sessionStars}";
+        }
+        if (pausedGameScoreText != null)
+        {
+            pausedGameScoreText.text = $"{GameManager.Instance.CurrentGameScore}";
+        }
+        if (collectedStarsText != null)
+        {
+            collectedStarsText.text = $"{StarSpawner.CollectedStars}/20";
         }
     }
 }

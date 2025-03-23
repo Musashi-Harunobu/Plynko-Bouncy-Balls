@@ -32,6 +32,8 @@ public class CannonPowerController : MonoBehaviour
         {
             UpdatePower();
         }
+        
+        FindObjectOfType<BallsList2D>().RefreshUI();
     }
 
     // Нажали на кнопку GO
@@ -58,22 +60,20 @@ public class CannonPowerController : MonoBehaviour
     {
         var gm = GameManager.Instance;
 
-        // Если нет шаров — проверяем конец раунда
+        // Если совсем нет мячей в roundBalls, проверяем конец раунда
         if (gm.roundBalls.Count == 0)
         {
             gm.CheckEndRound();
         }
 
-        // Если всё ещё есть шары
         if (gm.roundBalls.Count > 0)
         {
             _isShooting = true;
 
-            // Берём первый тип мяча из списка
+            // Берём тип мяча (но НЕ удаляем из roundBalls)
             var ballType = gm.roundBalls[0];
-            gm.roundBalls.RemoveAt(0);
 
-            // Выбираем подходящий префаб
+            // Код выбора префаба
             GameObject chosenPrefab = null;
             switch (ballType)
             {
@@ -93,27 +93,23 @@ public class CannonPowerController : MonoBehaviour
 
             float power = Mathf.Clamp01(Time.time - _chargeStartTime);
 
-            // Создаём мяч
+            // Создаём физический объект
             GameObject ball = Instantiate(chosenPrefab, transform.position, Quaternion.identity);
 
-            // Убедимся, что в этом префабе есть скрипт Ball,
-            // можно вручную прицепить, а можно на префабах.
-            // Запишем в него текущий BallType
             Ball ballComponent = ball.GetComponent<Ball>();
             if (ballComponent != null)
             {
                 ballComponent.ballType = ballType;
             }
 
-            // Применяем силу в направлении вниз (пушка смотрит вверх, 
-            // поэтому берём -transform.up)
+            // Применяем силу
             Rigidbody2D rb = ball.GetComponent<Rigidbody2D>();
             rb.AddForce(-transform.up * power * 500f);
 
             yield return new WaitForSeconds(shotDelay);
             _isShooting = false;
 
-            // Если после выстрела шаров больше не осталось
+            // Если после выстрела нечем стрелять, можно проверить ещё раз
             if (gm.roundBalls.Count == 0)
             {
                 gm.CheckEndRound();
@@ -124,7 +120,9 @@ public class CannonPowerController : MonoBehaviour
             Debug.Log("Нет мячей для выстрела!");
             _isShooting = false;
         }
+
     }
+
 
     private void UpdatePower()
     {

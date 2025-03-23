@@ -21,25 +21,29 @@ public class HoleManager : MonoBehaviour
             // Если лунка большая (красная)
             if (isBigHole)
             {
-                // Возвращаем шар в список playerBalls
                 var ballType = ballComponent.ballType;
-                Destroy(other.gameObject); // удаляем физический объект
+                Destroy(other.gameObject);
 
-                // Но добавляем тот же самый тип шара обратно в очередь GameManager
                 GameManager.Instance.roundBalls.Add(ballType);
 
                 // При желании здесь тоже можно давать очки/звёзды, если нужно
                 // GameManager.Instance.CurrentGameScore += holeValue;
                 // GameManager.Instance.Stars += holeValue;
+                
+                //FindObjectOfType<BallsList2D>().RefreshUI();
 
                 _scaleManager.ChangeScale();
             }
             else
             {
-                // Обычная лунка: шар уничтожается, зарабатываем очки и звёзды
+                // Обычная лунка: шар уничтожается
                 Destroy(other.gameObject);
 
-                
+                // Ищем первый мяч такого цвета в roundBalls и удаляем
+                var ballType = ballComponent.ballType;
+                GameManager.Instance.RemoveBallFromRoundBalls(ballType);
+
+                // Начисляем очки/звёзды
                 GameManager.Instance.CurrentGameScore += holeValue;
                 GameManager.Instance.AddStars(holeValue);
 
@@ -48,5 +52,6 @@ public class HoleManager : MonoBehaviour
                 _scaleManager.ChangeScale();
             }
         }
+        //FindObjectOfType<BallsList2D>().RefreshUI();
     }
 }

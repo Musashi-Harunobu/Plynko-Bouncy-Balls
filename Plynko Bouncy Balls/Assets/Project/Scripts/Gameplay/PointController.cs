@@ -28,7 +28,7 @@ public class PointController : MonoBehaviour
             // Универсальный зелёный мяч (уровень 4) — убиваем точку сразу
             if (ball.ballType == GameManager.BallType.Green)
             {
-                _strength = 0;
+                _strength -= 2;
             }
             // Совпадение цвета — повышенный урон (например, -2)
             else if (ball.ballType == pointColor)
