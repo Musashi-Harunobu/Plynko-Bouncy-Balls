@@ -3,13 +3,13 @@ using UnityEngine;
 
 public class PointManager : MonoBehaviour
 {
-    
     [SerializeField] private GameObject[] pointPrefab;
     [SerializeField] private int rows = 1;
     [SerializeField] private int columns = 1;
     [SerializeField] private float spawnInterval = 3f;
     [SerializeField] private Vector2 startPoint;
     [SerializeField] private float pointSpacing = 0.2f;
+    [SerializeField] private GameObject resultCanvas;
     
     private List<GameObject> _points = new List<GameObject>();
     private int _pointCount = 0;
@@ -92,8 +92,16 @@ public class PointManager : MonoBehaviour
     {
         CancelInvoke("MovePointsUp");
         
+        ResultsScreen results = FindObjectOfType<ResultsScreen>(true);
+        if (results != null)
+        {
+            results.ShowResults();
+        }
+        
         GameManager.Instance.GameOver();
-
+        
+        
+        
         Debug.LogError("Точки достигли верха поля! Игра окончена.");
     }
 }

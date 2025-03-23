@@ -14,6 +14,9 @@ public class ScreenInformation : MonoBehaviour
     
     [SerializeField] private TextMeshProUGUI resultGameScoreText;
     [SerializeField] private TextMeshProUGUI collectedStarsText;
+    
+    [SerializeField] private TextMeshProUGUI newScoreText; 
+    [SerializeField] private TextMeshProUGUI totalScoreText;
 
     private void FixedUpdate()
     {
@@ -38,6 +41,16 @@ public class ScreenInformation : MonoBehaviour
         if (collectedStarsText != null)
         {
             collectedStarsText.text = $"{StarSpawner.CollectedStars}/20";
+        }
+
+        if (newScoreText != null)
+        {
+            newScoreText.text = GameManager.Instance.CurrentGameScore.ToString();
+        }
+
+        if (totalScoreText != null)
+        {
+            totalScoreText.text = GameManager.Instance.Stars.ToString();
         }
     }
 }

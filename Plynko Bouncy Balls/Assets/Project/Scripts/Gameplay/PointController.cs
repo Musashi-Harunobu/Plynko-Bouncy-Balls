@@ -11,7 +11,7 @@ public class PointController : MonoBehaviour
     private void Awake()
     {
         // Случайная прочность
-        _strength = Random.Range(3, 8);
+        _strength = Random.Range(4, 8);
     }
 
     private void Update()

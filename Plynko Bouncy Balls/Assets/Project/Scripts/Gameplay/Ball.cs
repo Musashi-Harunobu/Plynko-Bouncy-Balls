@@ -1,11 +1,13 @@
 using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Ball : MonoBehaviour
 {
     public GameManager.BallType ballType;
     
     [SerializeField] private ParticleSystem particle;
+    
 
     private void OnCollisionEnter2D(Collision2D other)
     {
