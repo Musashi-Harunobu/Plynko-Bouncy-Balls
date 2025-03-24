@@ -4015,7 +4015,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LoadedScene: 1
-  Stars: 500
+  Stars: 0
   baseGameBallsOnStart: 2
   CurrentGameScore: 0
   permanentBalls: 

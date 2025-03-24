@@ -36,7 +36,6 @@ public class CannonPowerController : MonoBehaviour
         FindObjectOfType<BallsList2D>().RefreshUI();
     }
 
-    // Нажали на кнопку GO
     public void OnButtonDown()
     {
         if (!_isShooting)
@@ -46,7 +45,6 @@ public class CannonPowerController : MonoBehaviour
         }
     }
 
-    // Отпустили кнопку GO
     public void OnButtonUp()
     {
         if (!_isShooting)

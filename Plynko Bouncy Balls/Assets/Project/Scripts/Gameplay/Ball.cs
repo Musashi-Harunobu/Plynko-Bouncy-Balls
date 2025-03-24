@@ -18,7 +18,7 @@ public class Ball : MonoBehaviour
         }
         Debug.Log($"Ball collided with {other.gameObject.name}");
     }
-    
+
     private void OnTriggerEnter2D(Collider2D col)
     {
         Debug.Log($"Ball trigger with {col.gameObject.name}");
