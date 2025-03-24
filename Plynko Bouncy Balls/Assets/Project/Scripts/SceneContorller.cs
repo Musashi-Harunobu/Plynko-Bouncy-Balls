@@ -23,7 +23,7 @@ public class SceneContorller : MonoBehaviour
 
         SceneManager.LoadScene(++sceneID);
         Time.timeScale = 1f;
-        //GameManager.Instance.StartNewRound();
+
     }
 
     public static void LoadSceneByIndex(int sceneID)
@@ -37,7 +37,7 @@ public class SceneContorller : MonoBehaviour
     {
         SceneManager.LoadScene(sceneName);
         Time.timeScale = 1f;
-        //GameManager.Instance.StartNewRound();
+
     }
 
     public static void CloseGame()

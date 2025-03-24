@@ -20,7 +20,6 @@ public class StarSpawner : MonoBehaviour
 
     public void SpawnRandomStars(int starsToSpawn)
     {
-        // Сколько ещё можем заспавнить, не превышая лимит
         int available = maxStarsPerSession - _spawnedStarsCount;
         if (available <= 0)
         {
@@ -28,7 +27,6 @@ public class StarSpawner : MonoBehaviour
             return;
         }
 
-        // Если запросили больше, чем осталось "доступных", уменьшим
         if (starsToSpawn > available)
         {
             starsToSpawn = available;

@@ -18,12 +18,16 @@ public class GameManager : MonoBehaviour
 
     public int baseGameBallsOnStart = 2;
     
-    private int startSessionStars;
-    
     public int sessionStars { get; private set; }
     public int AddBallLevel { get; private set; }
     public int JoinBallLevel { get; private set; }
     public int MultiBallLevel { get; private set; }
+    public bool IsBallInFlight { get; private set; } = false;
+
+    public void SetBallInFlight(bool inFlight)
+    {
+        IsBallInFlight = inFlight;
+    }
 
     // -----------------------------
     // ТЕКУЩИЕ ПАРАМЕТРЫ СЕССИИ (сбрасываются при GameOver / StartNewGame)
@@ -37,10 +41,15 @@ public class GameManager : MonoBehaviour
     
     private const int TOP_SIZE = 5;
     public HighScoreEntry[] topResults = new HighScoreEntry[TOP_SIZE];
+    
+    private int startSessionStars;
 
     private PointManager _pointManager;
     
     private StarSpawner _starSpawner;
+    
+    private AudioSource _audioSource;
+    private bool _audioToggle;
 
     public enum BallType
     {
@@ -55,32 +64,31 @@ public class GameManager : MonoBehaviour
     // -----------------------------
     private void Awake()
     {
+        _audioSource = GetComponent<AudioSource>();
+        
         if (Instance == null)
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
 
-            // Загружаем перманентные данные (Stars, baseGameBallsOnStart, уровни апгрейдов, LoadedScene)
             LoadGameData();
         }
         else
         {
             Destroy(gameObject);
         }
+        PlayerPrefs.DeleteAll();
         LoadTopResults();
     }
 
     private void Start()
     {
-        // Если вдруг уровни загрузились как 0
         if (AddBallLevel < 1) AddBallLevel = 1;
         if (JoinBallLevel < 1) JoinBallLevel = 1;
         if (MultiBallLevel < 1) MultiBallLevel = 1;
 
         // По желанию можно автоматически начать игру
         // StartNewGame();
-        
-        
     }
     
     public void StartNewGame()
@@ -101,7 +109,7 @@ public class GameManager : MonoBehaviour
             permanentBalls.Add(BallType.Red);
         }
 
-        // Очищаем roundBalls (на случай, если что-то там было)
+        // Очищаем roundBalls
         roundBalls.Clear();
         
         if (_starSpawner != null)
@@ -131,7 +139,6 @@ public class GameManager : MonoBehaviour
             roundBalls.Add(ball);
         }
 
-        // Сдвигаем / создаём точки (ваша логика)
         if (_pointManager == null)
             _pointManager = FindObjectOfType<PointManager>();
         if (_pointManager != null)
@@ -174,8 +181,20 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < baseGameBallsOnStart; i++)
            permanentBalls.Add(BallType.Red);
 
-        // Сохраняем (уровни апгрейдов, Stars, LoadedScene)
         SaveGameData();
+    }
+    
+    public void OnBallFinished()
+    {
+        // Мяч завершил свой полёт (достиг лунки)
+        IsBallInFlight = false;
+    
+        // Если инвентарь пуст (все мячи выстрелены), запускаем новый раунд
+        if (roundBalls.Count == 0)
+        {
+            Debug.Log("Все мячи использованы. Запускаем новый раунд.");
+            StartNewRound();
+        }
     }
     
     public void AddStars(int value)
@@ -188,23 +207,19 @@ public class GameManager : MonoBehaviour
 
         Debug.Log($"Добавлено {value} звёзд. Всего теперь {Stars}, за сессию {sessionStars}.");
     }
-    
-    public void RemoveBallFromRoundBalls(BallType type)
-    {
-        int index = roundBalls.IndexOf(type);
-        if (index >= 0)
-        {
-            roundBalls.RemoveAt(index);
-            Debug.Log($"Мяч цвета {type} удалён из roundBalls. Осталось {roundBalls.Count}.");
-        }
-        else
-        {
-            Debug.LogWarning($"Попытка удалить мяч цвета {type}, но его нет в roundBalls!");
-        }
-        
 
-        // Теперь проверяем, не пора ли завершать раунд
-        CheckEndRound();
+    public void AudioSourceToggle()
+    {
+        if (!_audioToggle)
+        {
+            _audioSource.volume = 0f;
+            _audioToggle = true;
+        }
+        else if (_audioToggle)
+        {
+            _audioSource.volume = 1f;
+            _audioToggle = false;
+        }
     }
 
     // -----------------------------
@@ -239,7 +254,6 @@ public class GameManager : MonoBehaviour
     {
         permanentBalls.Add(BallType.Green);
         roundBalls.Add(BallType.Green);
-        //FindObjectOfType<BallsList2D>().RefreshUI();
         
         Debug.Log($"Куплен универсальный (зелёный) мяч. permanentBalls={permanentBalls.Count}, roundBalls={roundBalls.Count}");
     }
@@ -269,7 +283,6 @@ public class GameManager : MonoBehaviour
         {
             if (JoinBallLevel >= 1)
             {
-                // Сколько мячей нужно объединить (2^level)
                 int ballsToCombine = (int)Mathf.Pow(2, JoinBallLevel);
 
                 Dictionary<BallType, int> colorCounts = new Dictionary<BallType, int>();
@@ -430,7 +443,6 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i < TOP_SIZE; i++)
         {
-            // Считаем Score и Reward из PlayerPrefs
             int score = PlayerPrefs.GetInt($"HS_Score_{i}", 0);
             int reward = PlayerPrefs.GetInt($"HS_Reward_{i}", 0);
 
@@ -450,8 +462,6 @@ public class GameManager : MonoBehaviour
     
     public void AddNewResult(int newScore, int newReward)
     {
-        // 1) Ищем позицию, куда вставить результат
-        // (ищем, где score меньше, чем newScore)
         int insertPos = -1;
         for (int i = 0; i < TOP_SIZE; i++)
         {
@@ -462,22 +472,18 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        // Если insertPos так и остался -1, значит newScore не лучше ни одной позиции — не вставляем
         if (insertPos == -1)
         {
             return; 
         }
 
-        // 2) Сдвигаем все результаты «вниз», чтобы освободить место
         for (int i = TOP_SIZE - 1; i > insertPos; i--)
         {
             topResults[i] = topResults[i - 1];
         }
 
-        // 3) Ставим новый результат
         topResults[insertPos] = new HighScoreEntry(newScore, newReward);
 
-        // 4) Сохраняем обновлённую таблицу
         SaveTopResults();
     }
 }

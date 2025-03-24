@@ -10,7 +10,6 @@ public class PointController : MonoBehaviour
 
     private void Awake()
     {
-        // Случайная прочность
         _strength = Random.Range(4, 8);
     }
 
@@ -19,23 +18,19 @@ public class PointController : MonoBehaviour
         strengthText.text = _strength.ToString();
     }
 
-    // При столкновении с шаром
     private void OnCollisionEnter2D(Collision2D collision)
     {
         Ball ball = collision.gameObject.GetComponent<Ball>();
         if (ball != null)
         {
-            // Универсальный зелёный мяч (уровень 4) — убиваем точку сразу
             if (ball.ballType == GameManager.BallType.Green)
             {
                 _strength -= 2;
             }
-            // Совпадение цвета — повышенный урон (например, -2)
             else if (ball.ballType == pointColor)
             {
                 _strength -= 2;
             }
-            // Иначе обычный урон (-1)
             else
             {
                 _strength -= 1;
