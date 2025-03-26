@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 
@@ -18,7 +19,7 @@ public class GameManager : MonoBehaviour
 
     public int baseGameBallsOnStart = 2;
     
-    public int sessionStars { get; private set; }
+    public int SessionStars { get; private set; }
     public int AddBallLevel { get; private set; }
     public int JoinBallLevel { get; private set; }
     public int MultiBallLevel { get; private set; }
@@ -39,8 +40,9 @@ public class GameManager : MonoBehaviour
 
     public List<BallType> roundBalls = new List<BallType>();
     
-    private const int TOP_SIZE = 5;
     public HighScoreEntry[] topResults = new HighScoreEntry[TOP_SIZE];
+    private const int TOP_SIZE = 5;
+    
     
     private int startSessionStars;
 
@@ -49,7 +51,7 @@ public class GameManager : MonoBehaviour
     private StarSpawner _starSpawner;
     
     private AudioSource _audioSource;
-    private bool _audioToggle;
+    public bool AudioToggle;
 
     public enum BallType
     {
@@ -85,9 +87,6 @@ public class GameManager : MonoBehaviour
         if (AddBallLevel < 1) AddBallLevel = 1;
         if (JoinBallLevel < 1) JoinBallLevel = 1;
         if (MultiBallLevel < 1) MultiBallLevel = 1;
-
-        // По желанию можно автоматически начать игру
-        // StartNewGame();
     }
     
     public void StartNewGame()
@@ -98,7 +97,7 @@ public class GameManager : MonoBehaviour
         
         startSessionStars = Stars;
 
-        sessionStars = 0;
+        SessionStars = 0;
 
         StarSpawner.CollectedStars = 0;
         
@@ -167,13 +166,13 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("GAME OVER: сбрасываем временные вещи, но сохраняем уровни апгрейдов.");
         
-        AddNewResult(CurrentGameScore, sessionStars);
+        AddNewResult(CurrentGameScore, SessionStars);
 
         // Сброс временных составляющих (permanentBalls, Score).
         permanentBalls.Clear();
         roundBalls.Clear();
         CurrentGameScore = 0;
-        sessionStars = 0;
+        SessionStars = 0;
         startSessionStars = Stars;
         StarSpawner.CollectedStars = 0;
 
@@ -202,22 +201,22 @@ public class GameManager : MonoBehaviour
         Stars += value;
 
         // Вычисляем, сколько звёзд накоплено за сессию:
-        sessionStars = Stars - startSessionStars;
+        SessionStars = Stars - startSessionStars;
 
-        Debug.Log($"Добавлено {value} звёзд. Всего теперь {Stars}, за сессию {sessionStars}.");
+        Debug.Log($"Добавлено {value} звёзд. Всего теперь {Stars}, за сессию {SessionStars}.");
     }
 
     public void AudioSourceToggle()
     {
-        if (!_audioToggle)
+        if (!AudioToggle)
         {
             _audioSource.volume = 0f;
-            _audioToggle = true;
+            AudioToggle = true;
         }
-        else if (_audioToggle)
+        else if (AudioToggle)
         {
             _audioSource.volume = 1f;
-            _audioToggle = false;
+            AudioToggle = false;
         }
     }
 
@@ -227,7 +226,7 @@ public class GameManager : MonoBehaviour
 
     public void BuyAddBall()
     {
-        if (sessionStars >= 5)
+        if (SessionStars >= 5)
         {
             int ballsToBuy = AddBallLevel; // например, если уровень=2, покупаем 2 мяча
             for (int i = 0; i < ballsToBuy; i++)
@@ -236,7 +235,7 @@ public class GameManager : MonoBehaviour
                 roundBalls.Add(BallType.Red); // чтобы сразу использовать в раунде
             }
 
-            sessionStars -= 5;
+            SessionStars -= 5;
             // Stars -= ballsToBuy * 10;
             //FindObjectOfType<BallsList2D>().RefreshUI();
 
@@ -263,7 +262,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void BuyMultiBall()
     {
-        if (sessionStars >= 10)
+        if (SessionStars >= 10)
         {
             int multiBallsCount = MultiBallLevel;
             for (int i = 0; i < multiBallsCount; i++)
@@ -271,14 +270,14 @@ public class GameManager : MonoBehaviour
                 permanentBalls.Add(BallType.Green);
                 roundBalls.Add(BallType.Green);
             }
-            sessionStars -= 10;
+            SessionStars -= 10;
             Debug.Log($"Куплено {multiBallsCount} Multi-шаров. permanentBalls={permanentBalls.Count}, roundBalls={roundBalls.Count}");
         }
     }
 
     public void JoinBalls()
     {
-        if (sessionStars >= 7)
+        if (SessionStars >= 7)
         {
             if (JoinBallLevel >= 1)
             {
@@ -336,7 +335,7 @@ public class GameManager : MonoBehaviour
 
                 Debug.Log($"Объединены {ballsToCombine} шаров типа {colorToCombine} => новый {newType}.");
 
-                sessionStars -= 7;
+                SessionStars -= 7;
             }
         }
     }

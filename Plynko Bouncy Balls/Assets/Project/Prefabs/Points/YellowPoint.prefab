@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6462383197502808927}
   - component: {fileID: 6931694753621759442}
   - component: {fileID: 3993221106648422809}
+  - component: {fileID: -5077524167842668641}
   m_Layer: 0
   m_Name: YellowPoint
   m_TagString: Untagged
@@ -136,6 +137,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pointColor: 3
   strengthText: {fileID: 8532450856968903607}
+--- !u!114 &-5077524167842668641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3748364686129015423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f31f0a7ef657a9439978533142e4825, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8179325541219280921
 GameObject:
   m_ObjectHideFlags: 0

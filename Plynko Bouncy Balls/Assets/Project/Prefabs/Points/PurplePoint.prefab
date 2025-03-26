@@ -183,6 +183,7 @@ GameObject:
   - component: {fileID: 3667770446522318091}
   - component: {fileID: 447868969501384974}
   - component: {fileID: 8620600141925377789}
+  - component: {fileID: 6792744618508253461}
   m_Layer: 0
   m_Name: PurplePoint
   m_TagString: Untagged
@@ -307,3 +308,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pointColor: 2
   strengthText: {fileID: 8171084579566152383}
+--- !u!114 &6792744618508253461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 578869138529663949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f31f0a7ef657a9439978533142e4825, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

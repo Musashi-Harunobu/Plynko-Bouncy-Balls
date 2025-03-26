@@ -32,7 +32,7 @@ public class ScreenInformation : MonoBehaviour
         }
         if (roundStarCountText != null)
         {
-            roundStarCountText.text = $"{GameManager.Instance.sessionStars}";
+            roundStarCountText.text = $"{GameManager.Instance.SessionStars}";
         }
         if (pausedGameScoreText != null)
         {

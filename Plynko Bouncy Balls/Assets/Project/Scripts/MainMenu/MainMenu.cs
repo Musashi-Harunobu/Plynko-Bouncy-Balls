@@ -6,8 +6,11 @@ using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
+    [SerializeField] private SceneLoader sceneLoader;
+    
+    
     public void LoadedSceneController()
     {
-        SceneContorller.LoadSceneByIndex(GameManager.Instance.LoadedScene);
+        sceneLoader.LoadScene(GameManager.Instance.LoadedScene);
     }
 }
