@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1855401518335144052}
   - component: {fileID: 6184845625128880893}
   - component: {fileID: 2889903400567107379}
-  - component: {fileID: 3640569677966483969}
+  - component: {fileID: 5029587423011764767}
   m_Layer: 0
   m_Name: RedBall
   m_TagString: PurpleBall
@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 1495944201365585555}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.85, y: -0.14, z: 0}
+  m_LocalPosition: {x: -5.16, y: 1.55, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -75,8 +75,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1854317479
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: f53722e70ee77e34c935bc329c2cb8ec, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -165,7 +165,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ballType: 0
   particle: {fileID: 2315837567888763085}
---- !u!96 &3640569677966483969
+--- !u!96 &5029587423011764767
 TrailRenderer:
   serializedVersion: 3
   m_ObjectHideFlags: 0
@@ -204,9 +204,9 @@ TrailRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: -1
+  m_SortingLayerID: -1854317479
+  m_SortingLayer: 1
+  m_SortingOrder: 0
   m_Time: 0.1
   m_PreviewTimeScale: 1
   m_Parameters:
@@ -5131,9 +5131,9 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingLayerID: -1854317479
+  m_SortingLayer: 1
+  m_SortingOrder: 0
   m_RenderMode: 0
   m_MeshDistribution: 0
   m_SortMode: 0

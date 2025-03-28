@@ -23,4 +23,9 @@ public class Ball : MonoBehaviour
     {
         Debug.Log($"Ball trigger with {col.gameObject.name}");
     }
+
+    private void OnDestroy()
+    {
+        GameManager.Instance.SetBallInFlight(false);
+    }
 }

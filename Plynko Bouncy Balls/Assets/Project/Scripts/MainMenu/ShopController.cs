@@ -9,6 +9,11 @@ public class ShopController : MonoBehaviour
         GameManager.Instance.BuyAddBall();
     }
 
+    public void BuyPermanentBallOnScene()
+    {
+        GameManager.Instance.BuyPermanentBall();
+    }
+
     public void JoinBalls()
     {
         GameManager.Instance.JoinBalls();

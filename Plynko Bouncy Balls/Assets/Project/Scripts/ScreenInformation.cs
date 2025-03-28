@@ -7,6 +7,7 @@ using TMPro;
 public class ScreenInformation : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI stars;
+    [SerializeField] private TextMeshProUGUI  baseGameStartBalls;
     
     [SerializeField] private TextMeshProUGUI currentGameScoreText;
     [SerializeField] private TextMeshProUGUI pausedGameScoreText;
@@ -23,6 +24,11 @@ public class ScreenInformation : MonoBehaviour
         if (stars != null)
         {
             stars.text = $"{GameManager.Instance.Stars}";
+        }
+
+        if (baseGameStartBalls != null)
+        {
+            baseGameStartBalls.text = $"{GameManager.Instance.baseGameBallsOnStart}";
         }
         
 

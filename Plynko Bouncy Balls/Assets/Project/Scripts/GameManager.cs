@@ -68,6 +68,9 @@ public class GameManager : MonoBehaviour
     {
         _audioSource = GetComponent<AudioSource>();
         
+        PlayerPrefs.DeleteAll();
+
+        
         if (Instance == null)
         {
             Instance = this;
@@ -175,6 +178,7 @@ public class GameManager : MonoBehaviour
         SessionStars = 0;
         startSessionStars = Stars;
         StarSpawner.CollectedStars = 0;
+        IsBallInFlight = false;
 
         for (int i = 0; i < baseGameBallsOnStart; i++)
            permanentBalls.Add(BallType.Red);
@@ -184,10 +188,8 @@ public class GameManager : MonoBehaviour
     
     public void OnBallFinished()
     {
-        // Мяч завершил свой полёт (достиг лунки)
         IsBallInFlight = false;
     
-        // Если инвентарь пуст (все мячи выстрелены), запускаем новый раунд
         if (roundBalls.Count == 0)
         {
             Debug.Log("Все мячи использованы. Запускаем новый раунд.");
@@ -197,10 +199,8 @@ public class GameManager : MonoBehaviour
     
     public void AddStars(int value)
     {
-        // Увеличиваем общее число звёзд
         Stars += value;
 
-        // Вычисляем, сколько звёзд накоплено за сессию:
         SessionStars = Stars - startSessionStars;
 
         Debug.Log($"Добавлено {value} звёзд. Всего теперь {Stars}, за сессию {SessionStars}.");
@@ -224,20 +224,26 @@ public class GameManager : MonoBehaviour
     // ЛОГИКА «ПОКУПОК» И «ОБЪЕДИНЕНИЙ»
     // -----------------------------
 
+    public void BuyPermanentBall()
+    {
+        if (Stars >= 20)
+        {
+            baseGameBallsOnStart++;
+        }
+    }
+
     public void BuyAddBall()
     {
         if (SessionStars >= 5)
         {
-            int ballsToBuy = AddBallLevel; // например, если уровень=2, покупаем 2 мяча
+            int ballsToBuy = AddBallLevel;
             for (int i = 0; i < ballsToBuy; i++)
             {
                 permanentBalls.Add(BallType.Red);
-                roundBalls.Add(BallType.Red); // чтобы сразу использовать в раунде
+                roundBalls.Add(BallType.Red);
             }
 
             SessionStars -= 5;
-            // Stars -= ballsToBuy * 10;
-            //FindObjectOfType<BallsList2D>().RefreshUI();
 
             Debug.Log($"Куплено {ballsToBuy} красных мячей. permanentBalls={permanentBalls.Count}, roundBalls={roundBalls.Count}");
         }
@@ -250,10 +256,13 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void BuyUniversalBall()
     {
-        permanentBalls.Add(BallType.Green);
-        roundBalls.Add(BallType.Green);
+        if (SessionStars >= 10)
+        {
+            permanentBalls.Add(BallType.Green);
+            roundBalls.Add(BallType.Green);
         
-        Debug.Log($"Куплен универсальный (зелёный) мяч. permanentBalls={permanentBalls.Count}, roundBalls={roundBalls.Count}");
+            Debug.Log($"Куплен универсальный (зелёный) мяч. permanentBalls={permanentBalls.Count}, roundBalls={roundBalls.Count}");
+        }
     }
 
     /// <summary>
@@ -339,19 +348,7 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-
-
-    // -----------------------------
-    // ВЫСТРЕЛЫ / ИСПОЛЬЗОВАНИЕ МЯЧЕЙ В РАУНДЕ
-    // -----------------------------
-    public void SpendBall(int index)
-    {
-        if (index >= 0 && index < roundBalls.Count)
-        {
-            roundBalls.RemoveAt(index);
-            Debug.Log($"Мяч {index} из roundBalls израсходован. Осталось {roundBalls.Count} мячей в раунде.");
-        }
-    }
+    
 
     // -----------------------------
     // ПЕРМАНЕНТНЫЕ АПГРЕЙДЫ
