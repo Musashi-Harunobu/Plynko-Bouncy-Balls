@@ -68,9 +68,6 @@ public class GameManager : MonoBehaviour
     {
         _audioSource = GetComponent<AudioSource>();
         
-        PlayerPrefs.DeleteAll();
-
-        
         if (Instance == null)
         {
             Instance = this;
